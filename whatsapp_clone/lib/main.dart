@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WhatsApp Clone',
-      theme: ThemeData(primaryColor: Colors.blueAccent),
+      theme: ThemeData(primaryColor: Colors.teal.shade900),
       home: const HomeView(),
     );
   }

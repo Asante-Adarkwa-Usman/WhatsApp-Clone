@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
+import 'package:whatsapp_clone/custom_widgets/chat_session_view.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({Key? key}) : super(key: key);
@@ -9,46 +9,48 @@ class ChatView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white24,
-        body: ListView(padding: const EdgeInsets.all(10), children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              TextButton(
-                  onPressed: null,
-                  child: Text('Edit',
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 18,
-                      ))),
-              IconButton(
-                  onPressed: null,
-                  icon: Icon(
-                    UniconsLine.external_link_alt,
-                    color: Colors.blueAccent,
-                  )),
-            ],
+        body: ListView(padding: const EdgeInsets.all(10), children: const [
+          ChatSessionView(
+            name: 'Asante Usman',
+            message: 'Hi, how are you?',
+            date: 'Yesterday',
+            numberOfMessages: '1',
+            imageSrc: 'assets/images/user.jpeg',
           ),
-          const SizedBox(
-            height: 20.0,
+          Divider(
+            thickness: 1.0,
+            indent: 70.0,
           ),
-          const Text(
-            'Chats',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+          ChatSessionView(
+            name: 'Joane Hamadani',
+            message: 'Hiii girlll !!!!',
+            date: 'Yesterday',
+            numberOfMessages: '3',
+            imageSrc: 'assets/images/lady1.jpg',
           ),
-          const SizedBox(
-            height: 15.0,
+          Divider(
+            thickness: 1.0,
+            indent: 70.0,
           ),
-          TextField(
-            style: const TextStyle(fontSize: 15),
-            decoration: InputDecoration(
-              prefixIcon: const Icon(UniconsLine.search, size: 18),
-              hintText: 'Search',
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                  )),
-            ),
+          ChatSessionView(
+            name: 'Opoku Esther',
+            message: 'Hi dear, have you eaten?',
+            date: 'Today',
+            imageSrc: 'assets/images/lady2.jpg',
+          ),
+          Divider(
+            thickness: 1.0,
+            indent: 70.0,
+          ),
+          ChatSessionView(
+            name: 'Juliana Asante',
+            message: 'I am there oooo',
+            date: '11:45 AM',
+            imageSrc: 'assets/images/lady3.jpg',
+          ),
+          Divider(
+            thickness: 1.0,
+            indent: 70.0,
           ),
         ]),
       ),
