@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 import 'package:whatsapp_clone/views/call/call_view.dart';
-import 'package:whatsapp_clone/views/camera/camera_view.dart';
+// import 'package:whatsapp_clone/views/call/call_view.dart';
+// import 'package:whatsapp_clone/views/camera/camera_view.dart';
 import 'package:whatsapp_clone/views/chat/chat_view.dart';
-import 'package:whatsapp_clone/views/settings/settings_view.dart';
-import 'package:whatsapp_clone/views/status/status_view.dart';
+// import 'package:whatsapp_clone/views/settings/settings_view.dart';
+// import 'package:whatsapp_clone/views/status/status_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -14,48 +15,53 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-//navigation index and screens
-  int _currentIndex = 0;
-  final List<Widget> _views = [
-    const StatusView(),
-    const CallView(),
-    const CameraView(),
-    const ChatView(),
-    const SettingsView(),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        children: _views,
-        index: _currentIndex,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey.shade300,
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+          body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              elevation: 0,
+              backgroundColor: Theme.of(context).primaryColor,
+              title: const Text('WhatsApp'),
+              pinned: true,
+              floating: true,
+              actions: const <Widget>[
+                IconButton(
+                    onPressed: null,
+                    icon: Icon(Icons.search, color: Colors.white)),
+                IconButton(
+                    onPressed: null,
+                    icon: Icon(UniconsLine.comment_alt_lines,
+                        color: Colors.white)),
+                IconButton(
+                    onPressed: null,
+                    icon: Icon(Icons.more_vert, color: Colors.white)),
+              ],
+              bottom: const TabBar(
+                indicatorColor: Colors.white,
+                tabs: [
+                  Tab(icon: Icon(Icons.camera_alt)),
+                  Tab(text: 'CHATS'),
+                  Tab(text: 'STATUS'),
+                  Tab(text: 'CALLS'),
+                ],
+              ),
+            ),
+          ];
         },
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(UniconsLine.record_audio), label: 'Status'),
-          BottomNavigationBarItem(
-              icon: Icon(UniconsLine.phone_alt), label: 'Calls'),
-          BottomNavigationBarItem(
-              icon: Icon(UniconsLine.camera), label: 'Camera'),
-          BottomNavigationBarItem(
-              icon: Icon(UniconsLine.comments), label: 'Chats'),
-          BottomNavigationBarItem(
-              icon: Icon(UniconsLine.cog), label: 'Settings'),
-        ],
-      ),
+        body: const TabBarView(
+          children: <Widget>[
+            Icon(Icons.directions_car),
+            ChatView(),
+            Icon(Icons.directions_car),
+            CallView()
+          ],
+        ),
+      )),
     );
   }
 }
