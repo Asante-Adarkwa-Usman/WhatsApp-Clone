@@ -1,67 +1,86 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
 import 'package:whatsapp_clone/views/call/call_view.dart';
-// import 'package:whatsapp_clone/views/call/call_view.dart';
-// import 'package:whatsapp_clone/views/camera/camera_view.dart';
+import 'package:whatsapp_clone/views/camera/camera_view.dart';
 import 'package:whatsapp_clone/views/chat/chat_view.dart';
-// import 'package:whatsapp_clone/views/settings/settings_view.dart';
-// import 'package:whatsapp_clone/views/status/status_view.dart';
+import 'package:whatsapp_clone/views/status/status_view.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  final List<CameraDescription> cameras;
+  const HomeView({Key? key, required this.cameras}) : super(key: key);
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  _HomeViewState createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+  bool showFab = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(vsync: this, initialIndex: 1, length: 4);
+    _tabController!.addListener(() {
+      if (_tabController!.index == 1) {
+        showFab = true;
+      } else {
+        showFab = false;
+      }
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-          body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              elevation: 0,
-              backgroundColor: Theme.of(context).primaryColor,
-              title: const Text('WhatsApp'),
-              pinned: true,
-              floating: true,
-              actions: const <Widget>[
-                IconButton(
-                    onPressed: null,
-                    icon: Icon(Icons.search, color: Colors.white)),
-                IconButton(
-                    onPressed: null,
-                    icon: Icon(UniconsLine.comment_alt_lines,
-                        color: Colors.white)),
-                IconButton(
-                    onPressed: null,
-                    icon: Icon(Icons.more_vert, color: Colors.white)),
-              ],
-              bottom: const TabBar(
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(icon: Icon(Icons.camera_alt)),
-                  Tab(text: 'CHATS'),
-                  Tab(text: 'STATUS'),
-                  Tab(text: 'CALLS'),
-                ],
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal.shade900,
+        title: const Text("WhatsApp"),
+        elevation: 0.7,
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.white,
+          tabs: const <Widget>[
+            Tab(icon: Icon(Icons.camera_alt)),
+            Tab(text: "CHATS"),
+            Tab(
+              text: "STATUS",
             ),
-          ];
-        },
-        body: const TabBarView(
-          children: <Widget>[
-            Icon(Icons.directions_car),
-            ChatView(),
-            Icon(Icons.directions_car),
-            CallView()
+            Tab(
+              text: "CALLS",
+            ),
           ],
         ),
-      )),
+        actions: const <Widget>[
+          Icon(Icons.search),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.0),
+          ),
+          Icon(Icons.more_vert)
+        ],
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          CameraView(widget.cameras),
+          const ChatView(),
+          const StatusView(),
+          const CallView(),
+        ],
+      ),
+      floatingActionButton: showFab
+          ? FloatingActionButton(
+              backgroundColor: Colors.teal.shade900,
+              child: const Icon(
+                Icons.message,
+                color: Colors.white,
+              ),
+              onPressed: () => print("open chats"),
+            )
+          : null,
     );
   }
 }
