@@ -11,6 +11,11 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   unicons: ^2.0.2
+  camera: ^0.9.4+3
+  path_provider: ^2.0.6
+  path: ^1.8.0
+  stories_for_flutter: ^1.1.1
+  story_view: ^0.13.1
 
   
 

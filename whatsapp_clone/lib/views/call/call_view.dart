@@ -6,31 +6,53 @@ class CallView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const List<Widget> _callTileslist = [
+      CallTiles(
+          isImageSet: true,
+          name: 'Abanga Wizzy',
+          dateTime: 'Today, 11:45 AM',
+          callVideoIcon: 'video',
+          forwardingReceiving: 'callReceived',
+          imageSrc: 'assets/images/user.jpeg'),
+      CallTiles(
+          isImageSet: false,
+          name: 'Joane',
+          dateTime: 'Today, 11:45 AM',
+          callVideoIcon: 'call',
+          forwardingReceiving: 'callMade',
+          imageSrc: 'assets/images/lady2.jpg'),
+      CallTiles(
+          isImageSet: false,
+          name: 'Angel',
+          dateTime: 'Today, 11:45 AM',
+          callVideoIcon: 'call',
+          forwardingReceiving: 'callReceived',
+          imageSrc: 'assets/images/lady1.jpg'),
+      CallTiles(
+          isImageSet: false,
+          name: 'Janet',
+          dateTime: 'Today, 11:45 AM',
+          callVideoIcon: 'call',
+          forwardingReceiving: 'callMade',
+          imageSrc: 'assets/images/lady3.jpg'),
+    ];
+
     return Scaffold(
       body: ListView(
-        children: const <Widget>[
-          CallTiles(
-              isImageSet: true,
-              name: 'Abanga Wizzy',
-              dateTime: 'Today, 11:45 AM',
-              callVideoIcon: 'video',
-              forwardingReceiving: 'callReceived',
-              imageSrc: 'assets/images/user.jpeg'),
-          Divider(
-            thickness: 1.0,
-            indent: 70.0,
-          ),
-          CallTiles(
-              isImageSet: false,
-              name: 'Joane',
-              dateTime: 'Today, 11:45 AM',
-              callVideoIcon: 'call',
-              forwardingReceiving: 'callMade',
-              imageSrc: 'assets/images/lady2.jpg'),
-          Divider(
-            thickness: 1.0,
-            indent: 70.0,
-          ),
+        children: <Widget>[
+          for (var i = 0; i < _callTileslist.length; i++)
+            LimitedBox(
+              maxHeight: 100,
+              child: Column(
+                children: [
+                  _callTileslist.elementAt(i),
+                  const Divider(
+                    thickness: 1.0,
+                    indent: 70.0,
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
